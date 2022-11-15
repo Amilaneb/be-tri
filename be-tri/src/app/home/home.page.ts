@@ -9,4 +9,8 @@ export class HomePage {
 
   constructor() {}
 
+  onClickEvent() {
+    console.log("clique")
+  }
+
 }
