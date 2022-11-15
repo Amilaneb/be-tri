@@ -1,0 +1,1 @@
+https://github.com/13w13/AI-Waste-Sorting-Web-App-Pytorch
