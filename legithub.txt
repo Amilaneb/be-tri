@@ -1,1 +1,2 @@
 https://github.com/13w13/AI-Waste-Sorting-Web-App-Pytorch
+https://techonda.medium.com/how-to-convert-website-into-an-app-for-free-with-ionic-4-9201a6f993dc
