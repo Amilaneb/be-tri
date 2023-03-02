@@ -2,6 +2,8 @@ package fr.isen.deluc.be_tri
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import fr.isen.deluc.be_tri.databinding.ActivityMainBinding
 import java.io.File
+import java.io.FileDescriptor
 import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
@@ -48,7 +51,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-            binding.image.setImageURI(Uri.parse(photoPath))
+            val bitmapImage : Bitmap? = uriToBitmap(Uri.parse((photoPath)));
+            binding.image.setImageBitmap(bitmapImage);
         }
     }
 
@@ -63,5 +67,18 @@ class MainActivity : AppCompatActivity() {
         photoPath = image.absolutePath
 
         return image
+    }
+
+    private fun uriToBitmap(fileUri: Uri): Bitmap? {
+        try {
+            val parcelFileDescriptor = contentResolver.openFileDescriptor(fileUri, "r")
+            val fileDescriptor: FileDescriptor = parcelFileDescriptor!!.fileDescriptor
+            val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+            parcelFileDescriptor.close()
+            return image
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
     }
 }
